@@ -6,7 +6,6 @@ import edu.itu.cavabunga.lib.entity.property.Class;
 import edu.itu.cavabunga.lib.exception.Validation;
 import lombok.Data;
 import org.hibernate.annotations.DiscriminatorOptions;
-import org.omg.PortableServer.THREAD_POLICY_ID;
 
 import javax.persistence.*;
 import javax.persistence.Version;

@@ -12,7 +12,7 @@ import java.util.List;
 public class Journal extends Component {
     @Override
     public void validate(){
-        if(!(this.getParent() instanceof Component)){
+        if(this.getParent() != null && !(this.getParent() instanceof Component)){
             throw new Validation("Journal component cannot be child of: " + this.getParent().getClass().getName());
         }
 

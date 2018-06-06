@@ -2,7 +2,6 @@ package edu.itu.cavabunga.lib.entity.parameter;
 
 import edu.itu.cavabunga.lib.entity.Parameter;
 import edu.itu.cavabunga.lib.exception.Validation;
-import org.omg.PortableServer.THREAD_POLICY_ID;
 
 import javax.persistence.Entity;
 

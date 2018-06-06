@@ -22,5 +22,6 @@ public class Standard extends Component {
         requireOneList.add(PropertyType.Dtstart);
         requireOneList.add(PropertyType.Tzname);
         requireOneList.add(PropertyType.Tzoffsetfrom);
+        super.validateRequiredOneProperties(requireOneList);
     }
 }

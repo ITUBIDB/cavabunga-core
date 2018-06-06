@@ -4,7 +4,6 @@ import edu.itu.cavabunga.lib.entity.Property;
 import edu.itu.cavabunga.lib.exception.Validation;
 
 import javax.persistence.Entity;
-import java.util.List;
 
 @Entity
 public class Calscale extends Property {
