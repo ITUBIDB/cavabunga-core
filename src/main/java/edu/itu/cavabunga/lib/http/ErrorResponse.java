@@ -26,4 +26,6 @@ public class ErrorResponse extends Response {
         super(code, message);
         this.data = data;
     }
+
+    public ErrorResponse(){}
 }

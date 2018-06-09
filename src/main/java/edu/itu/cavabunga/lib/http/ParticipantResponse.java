@@ -43,4 +43,6 @@ public class ParticipantResponse extends Response {
         super(code, message);
         this.data.add(data);
     }
+
+    public ParticipantResponse(){}
 }

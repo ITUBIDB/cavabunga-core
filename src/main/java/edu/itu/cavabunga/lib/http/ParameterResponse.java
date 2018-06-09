@@ -43,4 +43,6 @@ public class ParameterResponse extends Response {
         super(code, message);
         this.data.add(data);
     }
+
+    public ParameterResponse(){}
 }
