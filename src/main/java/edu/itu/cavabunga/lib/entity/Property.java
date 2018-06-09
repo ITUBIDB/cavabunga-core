@@ -8,7 +8,6 @@ import lombok.Data;
 import org.hibernate.annotations.DiscriminatorOptions;
 
 import javax.persistence.*;
-import javax.persistence.Version;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,6 +22,7 @@ import java.util.List;
         @JsonSubTypes.Type(value = Action.class, name = "Action"),
         @JsonSubTypes.Type(value = Attach.class, name = "Attach"),
         @JsonSubTypes.Type(value = Calscale.class, name = "Calscale"),
+        @JsonSubTypes.Type(value = Attendee.class, name = "Attendee"),
         @JsonSubTypes.Type(value = Catagories.class, name = "Catagories"),
         @JsonSubTypes.Type(value = Class.class, name = "Class"),
         @JsonSubTypes.Type(value = Comment.class, name = "Comment"),
@@ -37,6 +37,7 @@ import java.util.List;
         @JsonSubTypes.Type(value = Due.class, name = "Due"),
         @JsonSubTypes.Type(value = Duration.class, name = "Duration"),
         @JsonSubTypes.Type(value = Exdate.class, name = "Exdate"),
+        @JsonSubTypes.Type(value = Exrule.class, name = "Exrule"),
         @JsonSubTypes.Type(value = Freebusy.class, name = "Freebusy"),
         @JsonSubTypes.Type(value = Geo.class, name = "Geo"),
         @JsonSubTypes.Type(value = Lastmod.class, name = "Lastmod"),
@@ -65,7 +66,7 @@ import java.util.List;
         @JsonSubTypes.Type(value = Tzurl.class, name = "Tzurl"),
         @JsonSubTypes.Type(value = Uid.class, name = "Uid"),
         @JsonSubTypes.Type(value = Url.class, name = "Url"),
-        @JsonSubTypes.Type(value = Version.class, name = "Version")
+        @JsonSubTypes.Type(value = edu.itu.cavabunga.lib.entity.property.Version.class, name = "Version")
 })
 @Data
 public abstract class Property {
