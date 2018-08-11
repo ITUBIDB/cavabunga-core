@@ -46,6 +46,9 @@ public abstract class Participant {
     @JsonIgnore
     private List<Component> components = new ArrayList<>();
 
+    @Column(name="password")
+    private String password;
+
     public Participant(){
 
     }
