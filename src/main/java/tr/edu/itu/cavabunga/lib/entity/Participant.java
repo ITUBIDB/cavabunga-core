@@ -21,7 +21,7 @@ import java.util.List;
 @EntityListeners(AuditingEntityListener.class)
 @DiscriminatorOptions(force=true)
 @JsonIgnoreProperties(ignoreUnknown = true, value= {"components"}) //TODO: participants with no component will give error while building JSON
-@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY)
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME)
 @JsonSubTypes({
         @JsonSubTypes.Type(value = User.class, name = "User"),
         @JsonSubTypes.Type(value = Group.class, name = "Group"),

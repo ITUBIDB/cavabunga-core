@@ -1,46 +1,82 @@
 package tr.edu.itu.cavabunga.lib.entity.component;
 
-import com.tngtech.java.junit.dataprovider.DataProviderRunner;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mockito;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.boot.test.context.SpringBootTest;
+import tr.edu.itu.cavabunga.lib.entity.Component;
 import tr.edu.itu.cavabunga.lib.entity.Property;
-import tr.edu.itu.cavabunga.lib.entity.property.Action;
-import tr.edu.itu.cavabunga.lib.entity.property.Trigger;
-import org.mockito.runners.MockitoJUnitRunner;
+import tr.edu.itu.cavabunga.lib.entity.property.PropertyType;
+import tr.edu.itu.cavabunga.lib.exception.Validation;
+
+import java.util.ArrayList;
+import java.util.stream.Stream;
 
 import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
-@RunWith(MockitoJUnitRunner.class)
 @SpringBootTest
-public class AlarmTest {
-    private Alarm alarm;
+class AlarmTest {
 
-    @Before
-    public void setUp() {
-        this.alarm = new Alarm();
-        Event parentEvent = mock(Event.class);
-        alarm.setParent(parentEvent);
-        Action childAction = mock(Action.class);
-        when(childAction.getClass()).thenReturn(Action.class);
-        alarm.addProperty(childAction);
-        Trigger childTrigger = mock(Trigger.class);
-        alarm.addProperty(childTrigger);
-    }
+	@ParameterizedTest
+	@MethodSource("dataProviderNotValid")
+	void validateFailTest(Component parent, ArrayList<PropertyType> properties) throws Validation{
+		Alarm alarm = new Alarm();
+		alarm.setParent(parent);
+		for(PropertyType p : properties) {
+			Property temp = p.create();
+			temp.setName(p.name());
+			alarm.addProperty(temp);
+		}
+		assertThrows(Validation.class, alarm::validate);
+	}
 
-    @After
-    public void tearDown() {
+	private static Stream dataProviderNotValid() {
+		return Stream.of(
+			Arguments.of(
+				new Freebusy(),
+				new ArrayList<PropertyType>() {{
+					add(PropertyType.Due);
+					add(PropertyType.Repeat);
+				}}),
+			Arguments.of(
+				new Event(),
+				new ArrayList<PropertyType>() {{
+					add(PropertyType.Due);
+					add(PropertyType.Due);
+				}})
+		);
+	}
 
-    }
+	@ParameterizedTest
+	@MethodSource("dataProviderValid")
+	void validateSuccessTest(Component parent, ArrayList<PropertyType> properties){
+		Alarm alarm = new Alarm();
+		alarm.setParent(parent);
+		for(PropertyType p : properties) {
+			Property temp = mock(p.create().getClass());
+			doNothing().when(temp).validate();
+			when(temp.getName()).thenReturn(p.name());
+			alarm.addProperty(temp);
+		}
+		alarm.validate();
+	}
 
-    @Test
-    public void validateTest() {
-        for(Property p : alarm.getProperties()){
-            System.out.println(p.getClass());
-        }
-        alarm.validate();
-    }
+	private static Stream dataProviderValid() {
+		return Stream.of(
+			Arguments.of(
+				new Event(),
+				new ArrayList<PropertyType>() {{
+					add(PropertyType.Action);
+					add(PropertyType.Trigger);
+				}}),
+			Arguments.of(
+				new Todo(),
+				new ArrayList<PropertyType>() {{
+					add(PropertyType.Action);
+					add(PropertyType.Trigger);
+					add(PropertyType.Due);
+				}})
+		);
+	}
 }

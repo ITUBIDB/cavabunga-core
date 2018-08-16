@@ -12,9 +12,10 @@ public class Action extends Property {
         super.validate();
         super.validateValueType(PropertyValueType.TEXT);
 
-        if(!this.getValue().equals("AUDIO") &&
-                !this.getValue().equals("DISPLAY") &&
-                !this.getValue().equals("EMAIL")){
+        if(
+            !this.getValue().equals("AUDIO") &&
+            !this.getValue().equals("DISPLAY") &&
+            !this.getValue().equals("EMAIL")) {
             throw new Validation("ACTION value is different from acceptable value range: " + this.getValue());
         }
     }

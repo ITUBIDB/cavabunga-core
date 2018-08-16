@@ -9,9 +9,7 @@ public enum PropertyType {
         }
     },
     Action {
-        public Property create() {
-            return new Action();
-        }
+        public Property create() { return new Action(); }
     },
     Attach {
         public Property create() {

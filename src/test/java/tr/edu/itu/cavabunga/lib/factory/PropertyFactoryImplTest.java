@@ -1,89 +1,80 @@
 package tr.edu.itu.cavabunga.lib.factory;
 
-import com.tngtech.java.junit.dataprovider.DataProvider;
-import com.tngtech.java.junit.dataprovider.DataProviderRunner;
-import com.tngtech.java.junit.dataprovider.UseDataProvider;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.boot.test.context.SpringBootTest;
 import tr.edu.itu.cavabunga.lib.entity.Property;
 import tr.edu.itu.cavabunga.lib.entity.property.*;
 import tr.edu.itu.cavabunga.lib.entity.property.Class;
 
+import java.util.stream.Stream;
+
 import static org.hamcrest.CoreMatchers.instanceOf;
 
-@RunWith(DataProviderRunner.class)
 @SpringBootTest
-public class PropertyFactoryImplTest {
-    public PropertyFactory propertyFactory;
+class PropertyFactoryImplTest {
 
-    @Before
-    public void setup(){
-        propertyFactory = new PropertyFactoryImpl();
-    }
-
-    @Test
-    @UseDataProvider("dataProviderPropertyType")
-    public void testCreateProperty(PropertyType propertyType, java.lang.Class targetClass){
+    @ParameterizedTest
+    @MethodSource("dataProviderPropertyType")
+	void testCreateProperty(PropertyType propertyType, java.lang.Class targetClass){
+        PropertyFactory propertyFactory = new PropertyFactoryImpl();
         Property result = propertyFactory.createProperty(propertyType);
         Assert.assertThat(result, instanceOf(targetClass));
     }
 
-    @DataProvider
-    public static Object[][] dataProviderPropertyType(){
-        return new Object[][] {
-                {PropertyType.Acknowledged, Acknowledged.class},
-                {PropertyType.Action, Action.class},
-                {PropertyType.Attach, Attach.class},
-                {PropertyType.Attendee, Attendee.class},
-                {PropertyType.Calscale, Calscale.class},
-                {PropertyType.Catagories, Catagories.class},
-                {PropertyType.Class, Class.class},
-                {PropertyType.Comment, Comment.class},
-                {PropertyType.Completed, Completed.class},
-                {PropertyType.Contact, Contact.class},
-                {PropertyType.Country, Country.class},
-                {PropertyType.Created, Created.class},
-                {PropertyType.Description, Description.class},
-                {PropertyType.Dtend, Dtend.class},
-                {PropertyType.Dtstamp, Dtstamp.class},
-                {PropertyType.Dtstart, Dtstart.class},
-                {PropertyType.Due, Due.class},
-                {PropertyType.Duration, Duration.class},
-                {PropertyType.Exdate, Exdate.class},
-                {PropertyType.Exrule, Exrule.class},
-                {PropertyType.Freebusy, Freebusy.class},
-                {PropertyType.Geo, Geo.class},
-                {PropertyType.Lastmod, Lastmod.class},
-                {PropertyType.Location, Location.class},
-                {PropertyType.Method, Method.class},
-                {PropertyType.Organizer, Organizer.class},
-                {PropertyType.Percent, Percent.class},
-                {PropertyType.Priority, Priority.class},
-                {PropertyType.Prodid, Prodid.class},
-                {PropertyType.Rdate, Rdate.class},
-                {PropertyType.Recurid, Recurid.class},
-                {PropertyType.Related, Related.class},
-                {PropertyType.Repeat, Repeat.class},
-                {PropertyType.Resources, Resources.class},
-                {PropertyType.Rrule, Rrule.class},
-                {PropertyType.Rstatus, Rstatus.class},
-                {PropertyType.Seq, Seq.class},
-                {PropertyType.Status, Status.class},
-                {PropertyType.Summary, Summary.class},
-                {PropertyType.Transp, Transp.class},
-                {PropertyType.Trigger, Trigger.class},
-                {PropertyType.Tzid, Tzid.class},
-                {PropertyType.Tzname, Tzname.class},
-                {PropertyType.Tzoffsetfrom, Tzoffsetfrom.class},
-                {PropertyType.Tzoffsetto, Tzoffsetto.class},
-                {PropertyType.Tzurl, Tzurl.class},
-                {PropertyType.Uid, Uid.class},
-                {PropertyType.Url, Url.class},
-                {PropertyType.Version, Version.class},
-        };
+    private static Stream dataProviderPropertyType(){
+        return Stream.of(
+            Arguments.of(PropertyType.Acknowledged, Acknowledged.class),
+            Arguments.of(PropertyType.Action, Action.class),
+            Arguments.of(PropertyType.Attach, Attach.class),
+            Arguments.of(PropertyType.Attendee, Attendee.class),
+            Arguments.of(PropertyType.Calscale, Calscale.class),
+            Arguments.of(PropertyType.Catagories, Catagories.class),
+            Arguments.of(PropertyType.Class, Class.class),
+            Arguments.of(PropertyType.Comment, Comment.class),
+            Arguments.of(PropertyType.Completed, Completed.class),
+            Arguments.of(PropertyType.Contact, Contact.class),
+            Arguments.of(PropertyType.Country, Country.class),
+            Arguments.of(PropertyType.Created, Created.class),
+            Arguments.of(PropertyType.Description, Description.class),
+            Arguments.of(PropertyType.Dtend, Dtend.class),
+            Arguments.of(PropertyType.Dtstamp, Dtstamp.class),
+            Arguments.of(PropertyType.Dtstart, Dtstart.class),
+            Arguments.of(PropertyType.Due, Due.class),
+            Arguments.of(PropertyType.Duration, Duration.class),
+            Arguments.of(PropertyType.Exdate, Exdate.class),
+            Arguments.of(PropertyType.Exrule, Exrule.class),
+            Arguments.of(PropertyType.Freebusy, Freebusy.class),
+            Arguments.of(PropertyType.Geo, Geo.class),
+            Arguments.of(PropertyType.Lastmod, Lastmod.class),
+            Arguments.of(PropertyType.Location, Location.class),
+            Arguments.of(PropertyType.Method, Method.class),
+            Arguments.of(PropertyType.Organizer, Organizer.class),
+            Arguments.of(PropertyType.Percent, Percent.class),
+            Arguments.of(PropertyType.Priority, Priority.class),
+            Arguments.of(PropertyType.Prodid, Prodid.class),
+            Arguments.of(PropertyType.Rdate, Rdate.class),
+            Arguments.of(PropertyType.Recurid, Recurid.class),
+            Arguments.of(PropertyType.Related, Related.class),
+            Arguments.of(PropertyType.Repeat, Repeat.class),
+            Arguments.of(PropertyType.Resources, Resources.class),
+            Arguments.of(PropertyType.Rrule, Rrule.class),
+            Arguments.of(PropertyType.Rstatus, Rstatus.class),
+            Arguments.of(PropertyType.Seq, Seq.class),
+            Arguments.of(PropertyType.Status, Status.class),
+            Arguments.of(PropertyType.Summary, Summary.class),
+            Arguments.of(PropertyType.Transp, Transp.class),
+            Arguments.of(PropertyType.Trigger, Trigger.class),
+            Arguments.of(PropertyType.Tzid, Tzid.class),
+            Arguments.of(PropertyType.Tzname, Tzname.class),
+            Arguments.of(PropertyType.Tzoffsetfrom, Tzoffsetfrom.class),
+            Arguments.of(PropertyType.Tzoffsetto, Tzoffsetto.class),
+            Arguments.of(PropertyType.Tzurl, Tzurl.class),
+            Arguments.of(PropertyType.Uid, Uid.class),
+            Arguments.of(PropertyType.Url, Url.class),
+            Arguments.of(PropertyType.Version, Version.class)
+        );
     }
-
 }

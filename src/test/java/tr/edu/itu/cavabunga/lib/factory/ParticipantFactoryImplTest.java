@@ -1,42 +1,33 @@
 package tr.edu.itu.cavabunga.lib.factory;
 
-
-import com.tngtech.java.junit.dataprovider.DataProvider;
-import com.tngtech.java.junit.dataprovider.DataProviderRunner;
-import com.tngtech.java.junit.dataprovider.UseDataProvider;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.boot.test.context.SpringBootTest;
 import tr.edu.itu.cavabunga.lib.entity.Participant;
 import tr.edu.itu.cavabunga.lib.entity.participant.*;
 
+import java.util.stream.Stream;
+
 import static org.hamcrest.CoreMatchers.instanceOf;
 
-@RunWith(DataProviderRunner.class)
 @SpringBootTest
-public class ParticipantFactoryImplTest {
-    public ParticipantFactory participantFactory;
+class ParticipantFactoryImplTest {
 
-    @Before
-    public void setup(){
-        participantFactory = new ParticipantFactoryImpl();
-    }
-
-    @Test
-    @UseDataProvider("dataProviderParticipantType")
-    public void testCreateParticipant(ParticipantType participantType, Class targetClass){
+    @ParameterizedTest
+    @MethodSource("dataProviderParameterType")
+    void testCreateParticipant(ParticipantType participantType, Class targetClass){
+        ParticipantFactory participantFactory = new ParticipantFactoryImpl();
         Participant result = participantFactory.createParticipant(participantType);
         Assert.assertThat(result, instanceOf(targetClass));
     }
 
-    @DataProvider
-    public static Object[][] dataProviderParticipantType() {
-        return new Object[][] {
-                {ParticipantType.Group, Group.class},
-                {ParticipantType.Resource, Resource.class},
-                {ParticipantType.User, User.class},
-        };
+    private static Stream dataProviderParameterType() {
+        return Stream.of(
+            Arguments.of(ParticipantType.Group, Group.class),
+            Arguments.of(ParticipantType.Resource, Resource.class),
+            Arguments.of(ParticipantType.User, User.class)
+        );
     }
 }

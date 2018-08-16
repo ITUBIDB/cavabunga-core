@@ -1,48 +1,40 @@
 package tr.edu.itu.cavabunga.lib.factory;
 
-import com.tngtech.java.junit.dataprovider.DataProvider;
-import com.tngtech.java.junit.dataprovider.DataProviderRunner;
-import com.tngtech.java.junit.dataprovider.UseDataProvider;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.boot.test.context.SpringBootTest;
 import tr.edu.itu.cavabunga.lib.entity.Component;
 import tr.edu.itu.cavabunga.lib.entity.component.*;
 
+import java.util.stream.Stream;
+
 import static org.hamcrest.CoreMatchers.instanceOf;
 
-@RunWith(DataProviderRunner.class)
 @SpringBootTest
-public class ComponentFactoryImplTest {
-    public ComponentFactory componentFactory;
+class ComponentFactoryImplTest {
 
-    @Before
-    public void setup(){
-        componentFactory = new ComponentFactoryImpl();
-    }
-
-    @Test
-    @UseDataProvider("dataProviderComponentType")
-    public void testCreateParameter(ComponentType componentType, Class targetClass){
+    @ParameterizedTest
+    @MethodSource("dataProviderComponentType")
+    void testCreateParameter(ComponentType componentType, Class targetClass){
+		ComponentFactory componentFactory = new ComponentFactoryImpl();
         Component result = componentFactory.createComponent(componentType);
         Assert.assertThat(result, instanceOf(targetClass));
     }
 
-
-    @DataProvider
-    public static Object[][] dataProviderComponentType() {
-        return new Object[][] {
-                {ComponentType.Alarm, Alarm.class},
-                {ComponentType.Calendar, Calendar.class},
-                {ComponentType.Daylight, Daylight.class},
-                {ComponentType.Event, Event.class},
-                {ComponentType.Freebusy, Freebusy.class},
-                {ComponentType.Journal, Journal.class},
-                {ComponentType.Standard, Standard.class},
-                {ComponentType.Timezone, Timezone.class},
-                {ComponentType.Todo, Todo.class},
-        };
+    private static Stream dataProviderComponentType() {
+        return Stream.of(
+            Arguments.of(ComponentType.Alarm, Alarm.class),
+            Arguments.of(ComponentType.Calendar, Calendar.class),
+            Arguments.of(ComponentType.Daylight, Daylight.class),
+            Arguments.of(ComponentType.Event, Event.class),
+            Arguments.of(ComponentType.Freebusy, Freebusy.class),
+            Arguments.of(ComponentType.Journal, Journal.class),
+            Arguments.of(ComponentType.Standard, Standard.class),
+            Arguments.of(ComponentType.Timezone, Timezone.class),
+            Arguments.of(ComponentType.Todo, Todo.class)
+        );
     }
 }

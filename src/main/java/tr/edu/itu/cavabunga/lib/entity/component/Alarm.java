@@ -13,19 +13,19 @@ public class Alarm extends Component {
     @Override
     public void validate(){
         if(!(this.getParent() instanceof Event) && !(this.getParent() instanceof Todo)){
-            throw new Validation("Alarm component can only be child of Event and Todo, not: " + this.getParent().getClass().getName());
+            throw new Validation("Alaram component parent should be a Event or Todo");
         }
 
         super.validate();
 
-        List<PropertyType> requireOneList = new ArrayList<>();
-        requireOneList.add(PropertyType.Action);
-        requireOneList.add(PropertyType.Trigger);
-        super.validateRequiredOneProperties(requireOneList);
+        List<PropertyType> requireOnceList = new ArrayList<>();
+        requireOnceList.add(PropertyType.Action);
+        requireOnceList.add(PropertyType.Trigger);
+        super.validateShouldHaveOneProperties(requireOnceList);
 
-        List<PropertyType> optionalOneList = new ArrayList<>();
-        optionalOneList.add(PropertyType.Due);
-        optionalOneList.add(PropertyType.Repeat);
-        super.validateOptionalOneProperties(optionalOneList);
+        List<PropertyType> optionalOnceList = new ArrayList<>();
+        optionalOnceList.add(PropertyType.Due);
+        optionalOnceList.add(PropertyType.Repeat);
+        super.validateAtMostHaveOneProperties(optionalOnceList);
     }
 }
