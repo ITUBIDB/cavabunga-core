@@ -12,13 +12,14 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "type", discriminatorType = DiscriminatorType.STRING)
 @DiscriminatorOptions(force=true)
 @JsonIgnoreProperties(ignoreUnknown = true)
-@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY)
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME)
 @JsonSubTypes({
         @JsonSubTypes.Type(value = Alarm.class, name = "Alarm"),
         @JsonSubTypes.Type(value = Calendar.class, name = "Calendar"),
@@ -47,100 +48,86 @@ public abstract class Component {
     @JsonBackReference
     private Component parent;
 
-    @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonManagedReference
     private List<Component> components = new ArrayList<>();
 
-    @OneToMany(mappedBy = "component", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "component", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonManagedReference
     private List<Property> properties = new ArrayList<>();
 
     @CreatedDate
     private Date creationDate;
 
-    public void addComponent(Component component){
+    public void addComponent(Component component) {
         component.setParent(this);
         component.setOwner(this.owner);
         components.add(component);
     }
 
-    public void addProperty(Property property){
+    public void addProperty(Property property) {
         property.setComponent(this);
         properties.add(property);
     }
 
-    public void validate(){
-        if(!components.isEmpty()){
+    public void validate() {
+        if(!components.isEmpty()) {
             for (Component c : components){
                 try {
                     c.validate();
-                }catch (Exception e){
+                } catch (Exception e) {
                     throw new Validation(this.getClass().getName() + " component's sub component validation failed: " + e.getMessage());
                 }
             }
         }
 
-        if(!properties.isEmpty()){
-            for(Property p : properties){
+        if(!properties.isEmpty()) {
+            for(Property p : properties) {
                 try {
                     p.validate();
                 }catch (Exception e){
-                    throw new Validation(this.getClass().getName() + " component property validateion failed " + e.getMessage());
+                    throw new Validation(this.getClass().getName() + " component property validation failed " + e.getMessage());
                 }
             }
         }
     }
-
-    public void validateOptionalOneProperties(List<PropertyType> propertyTypeList){
-        Integer propertyCount = 0;
+    protected void validateAtLeastHaveOneProperties(List<PropertyType> propertyTypeList) {
         for(PropertyType pt : propertyTypeList){
-            for(Property p : properties){
-                if(p.getClass().getName().equals(pt.create().getClass().getName())){
-                    propertyCount++;
-                }
+            long propertyCount = containsInstance(pt);
 
-                if(propertyCount >= 2){
-                    throw new Validation("Component validation failed in optional-one properties check: " + p.getClass().getName());
-                }
+            if(propertyCount < 1){
+                throw new Validation("Component validation failed in at least have one properties check: " + pt.create().getClass().getName());
             }
-            propertyCount = 0;
         }
     }
 
-    public void validateOptionalManyProperties(){
-        //
-    }
-
-    public void validateRequiredOneProperties(List<PropertyType> propertyTypeList){
-        Integer propertyCount = 0;
-        for(PropertyType pt : propertyTypeList){
-            for(Property p : properties){
-                if(p.getClass().getName().equals(pt.create().getClass().getName())){
-                    propertyCount++;
-                }
-            }
-
+    protected void validateShouldHaveOneProperties(List<PropertyType> propertyTypeList) {
+        for(PropertyType pt : propertyTypeList) {
+            long propertyCount = containsInstance(pt);
             if(propertyCount != 1){
-                throw new Validation("Component validation failed in required-one properties check. Count " + propertyCount + ": " + pt.create().getClass().getName());
+                throw new Validation("Component validation failed in should have one properties check. Count " + propertyCount + ": " + pt.create().getClass().getName());
             }
-
-            propertyCount = 0;
         }
     }
 
-    public void validateReqiredManyProperties(List<PropertyType> propertyTypeList){
-        Integer propertyCount = 0;
-        for(PropertyType pt : propertyTypeList){
-            for(Property p : properties){
-                if(p.getClass().getName().equals(pt.create().getClass().getName())){
-                    propertyCount++;
-                }
-            }
+    protected void validateAtMostHaveOneProperties(List<PropertyType> propertyTypeList) {
+        for(PropertyType pt : propertyTypeList) {
+            long propertyCount = containsInstance(pt);
 
-            if(propertyCount == 0){
-                throw new Validation("Component validation failed in required-many properties check: " + pt.create().getClass().getName());
+            if(propertyCount > 1) {
+                throw new Validation("Component validation failed in at most have one properties check: " + pt.getClass().getName());
             }
-
         }
+    }
+
+
+    private long containsInstance( PropertyType  propertyType) {
+		int count = 0;
+		for (Property e : properties) {
+			if (e.getName().equals(propertyType.name())) {
+				count++;
+			}
+		}
+		return count;
     }
 }

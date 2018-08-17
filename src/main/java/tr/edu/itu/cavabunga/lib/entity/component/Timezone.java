@@ -21,10 +21,10 @@ public class Timezone extends Component {
         List<PropertyType> optionalOneList = new ArrayList<>();
         optionalOneList.add(PropertyType.Lastmod);
         optionalOneList.add(PropertyType.Tzurl);
-        super.validateOptionalOneProperties(optionalOneList);
+        super.validateAtMostHaveOneProperties(optionalOneList);
 
         List<PropertyType> requiredOneList = new ArrayList<>();
         requiredOneList.add(PropertyType.Tzid);
-        super.validateRequiredOneProperties(requiredOneList);
+        super.validateShouldHaveOneProperties(requiredOneList);
     }
 }

@@ -12,26 +12,26 @@ import java.util.List;
 public class Journal extends Component {
     @Override
     public void validate(){
-        if(this.getParent() != null && !(this.getParent() instanceof Component)){
-            throw new Validation("Journal component cannot be child of: " + this.getParent().getClass().getName());
+        if(!(this.getParent() instanceof Calendar)){
+            throw new Validation("Journal component parent should be a Calendar");
         }
 
         super.validate();
 
-        List<PropertyType> optionalOneList = new ArrayList<>();
-        optionalOneList.add(PropertyType.Class);
-        optionalOneList.add(PropertyType.Created);
-        optionalOneList.add(PropertyType.Description);
-        optionalOneList.add(PropertyType.Dtstamp);
-        optionalOneList.add(PropertyType.Dtstart);
-        optionalOneList.add(PropertyType.Lastmod);
-        optionalOneList.add(PropertyType.Organizer);
-        optionalOneList.add(PropertyType.Recurid);
-        optionalOneList.add(PropertyType.Seq);
-        optionalOneList.add(PropertyType.Status);
-        optionalOneList.add(PropertyType.Summary);
-        optionalOneList.add(PropertyType.Uid);
-        optionalOneList.add(PropertyType.Url);
-        super.validateOptionalOneProperties(optionalOneList);
+        List<PropertyType> optionalOnceList = new ArrayList<>();
+        optionalOnceList.add(PropertyType.Class);
+        optionalOnceList.add(PropertyType.Created);
+        optionalOnceList.add(PropertyType.Description);
+        optionalOnceList.add(PropertyType.Dtstamp);
+        optionalOnceList.add(PropertyType.Dtstart);
+        optionalOnceList.add(PropertyType.Lastmod);
+        optionalOnceList.add(PropertyType.Organizer);
+        optionalOnceList.add(PropertyType.Recurid);
+        optionalOnceList.add(PropertyType.Seq);
+        optionalOnceList.add(PropertyType.Status);
+        optionalOnceList.add(PropertyType.Summary);
+        optionalOnceList.add(PropertyType.Uid);
+        optionalOnceList.add(PropertyType.Url);
+        this.validateAtLeastHaveOneProperties(optionalOnceList);
     }
 }

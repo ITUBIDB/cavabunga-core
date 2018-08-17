@@ -18,10 +18,10 @@ public class Daylight extends Component {
 
         super.validate();
 
-        List<PropertyType> requireOneList = new ArrayList<>();
-        requireOneList.add(PropertyType.Dtstart);
-        requireOneList.add(PropertyType.Tzname);
-        requireOneList.add(PropertyType.Tzoffsetfrom);
-        super.validateRequiredOneProperties(requireOneList);
+        List<PropertyType> requireOnceList = new ArrayList<>();
+        requireOnceList.add(PropertyType.Dtstart);
+        requireOnceList.add(PropertyType.Tzname);
+        requireOnceList.add(PropertyType.Tzoffsetfrom);
+        super.validateShouldHaveOneProperties(requireOnceList);
     }
 }

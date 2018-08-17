@@ -13,20 +13,20 @@ public class Freebusy extends Component {
     @Override
     public void validate(){
         if(!(this.getParent() instanceof Calendar)){
-            throw new Validation("Freebusy component cannot be child of:" + this.getParent().getClass().getName());
+            throw new Validation("Freebusy component parent should be a Calendar");
         }
 
         super.validate();
 
-        List<PropertyType> optionalOneList = new ArrayList<>();
-        optionalOneList.add(PropertyType.Contact);
-        optionalOneList.add(PropertyType.Dtend);
-        optionalOneList.add(PropertyType.Dtstamp);
-        optionalOneList.add(PropertyType.Dtstart);
-        optionalOneList.add(PropertyType.Duration);
-        optionalOneList.add(PropertyType.Organizer);
-        optionalOneList.add(PropertyType.Uid);
-        optionalOneList.add(PropertyType.Url);
-        super.validateOptionalOneProperties(optionalOneList);
+        List<PropertyType> optionalOnceList = new ArrayList<>();
+        optionalOnceList.add(PropertyType.Contact);
+        optionalOnceList.add(PropertyType.Dtend);
+        optionalOnceList.add(PropertyType.Dtstamp);
+        optionalOnceList.add(PropertyType.Dtstart);
+        optionalOnceList.add(PropertyType.Duration);
+        optionalOnceList.add(PropertyType.Organizer);
+        optionalOnceList.add(PropertyType.Uid);
+        optionalOnceList.add(PropertyType.Url);
+        super.validateAtMostHaveOneProperties(optionalOnceList);
     }
 }

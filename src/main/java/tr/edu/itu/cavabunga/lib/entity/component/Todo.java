@@ -13,7 +13,7 @@ public class Todo extends Component {
     @Override
     public void validate(){
         if(!(this.getParent() instanceof Calendar)){
-            throw new Validation("Todo component cannot be child of:" + this.getParent().getClass().getName());
+            throw new Validation("Todo component parent should be a Calendar");
         }
 
         super.validate();
@@ -37,11 +37,11 @@ public class Todo extends Component {
         optionalOneList.add(PropertyType.Summary);
         optionalOneList.add(PropertyType.Uid);
         optionalOneList.add(PropertyType.Url);
-        super.validateOptionalOneProperties(optionalOneList);
+        super.validateAtMostHaveOneProperties(optionalOneList);
 
         List<PropertyType> requireOneList = new ArrayList<>();
         requireOneList.add(PropertyType.Due);
         requireOneList.add(PropertyType.Duration);
-        super.validateRequiredOneProperties(requireOneList);
+        super.validateShouldHaveOneProperties(requireOneList);
     }
 }

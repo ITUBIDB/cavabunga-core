@@ -13,33 +13,34 @@ public class Event extends Component {
     @Override
     public void validate(){
         if(!(this.getParent() instanceof Calendar)){
-           throw new Validation("Event component cannot be child of: " + this.getParent().getClass().getName());
+           throw new Validation("Event component parent should be a Calendar");
         }
 
         super.validate();
 
-        List<PropertyType> optionalOneList = new ArrayList<>();
+        List<PropertyType> optionalOnceList = new ArrayList<>();
 
-        optionalOneList.add(PropertyType.Created);
-        optionalOneList.add(PropertyType.Description);
-        optionalOneList.add(PropertyType.Dtstamp);
-        optionalOneList.add(PropertyType.Dtstart);
-        optionalOneList.add(PropertyType.Geo);
-        optionalOneList.add(PropertyType.Lastmod);
-        optionalOneList.add(PropertyType.Location);
-        optionalOneList.add(PropertyType.Organizer);
-        optionalOneList.add(PropertyType.Priority);
-        optionalOneList.add(PropertyType.Recurid);
-        optionalOneList.add(PropertyType.Seq);
-        optionalOneList.add(PropertyType.Status);
-        optionalOneList.add(PropertyType.Summary);
-        optionalOneList.add(PropertyType.Transp);
-        optionalOneList.add(PropertyType.Uid);
-        optionalOneList.add(PropertyType.Url);
-        super.validateOptionalOneProperties(optionalOneList);
+        optionalOnceList.add(PropertyType.Created);
+        optionalOnceList.add(PropertyType.Description);
+        optionalOnceList.add(PropertyType.Dtstamp);
+        optionalOnceList.add(PropertyType.Dtstart);
+        optionalOnceList.add(PropertyType.Geo);
+        optionalOnceList.add(PropertyType.Lastmod);
+        optionalOnceList.add(PropertyType.Location);
+        optionalOnceList.add(PropertyType.Organizer);
+        optionalOnceList.add(PropertyType.Priority);
+        optionalOnceList.add(PropertyType.Recurid);
+        optionalOnceList.add(PropertyType.Seq);
+        optionalOnceList.add(PropertyType.Status);
+        optionalOnceList.add(PropertyType.Summary);
+        optionalOnceList.add(PropertyType.Transp);
+        optionalOnceList.add(PropertyType.Uid);
+        optionalOnceList.add(PropertyType.Url);
+        super.validateAtMostHaveOneProperties(optionalOnceList);
 
-        List<PropertyType> requiredOneList = new ArrayList<>();
-        requiredOneList.add(PropertyType.Dtend);
-        super.validateRequiredOneProperties(requiredOneList);
+        List<PropertyType> requiredOnceList = new ArrayList<>();
+        requiredOnceList.add(PropertyType.Dtend);
+        requiredOnceList.add(PropertyType.Duration);
+        super.validateAtLeastHaveOneProperties(requiredOnceList);
     }
 }
