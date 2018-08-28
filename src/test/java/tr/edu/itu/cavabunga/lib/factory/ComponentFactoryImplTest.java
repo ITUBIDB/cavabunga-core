@@ -1,19 +1,19 @@
 package tr.edu.itu.cavabunga.lib.factory;
 
 
-import org.junit.Assert;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.runner.RunWith;
 import tr.edu.itu.cavabunga.lib.entity.Component;
 import tr.edu.itu.cavabunga.lib.entity.component.*;
 
 import java.util.stream.Stream;
 
-import static org.hamcrest.CoreMatchers.instanceOf;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@SpringBootTest
+@RunWith(JUnitPlatform.class)
 class ComponentFactoryImplTest {
 
     @ParameterizedTest
@@ -21,7 +21,7 @@ class ComponentFactoryImplTest {
     void testCreateParameter(ComponentType componentType, Class targetClass){
 		ComponentFactory componentFactory = new ComponentFactoryImpl();
         Component result = componentFactory.createComponent(componentType);
-        Assert.assertThat(result, instanceOf(targetClass));
+		assertEquals(result.getClass().getName(), targetClass.getName());
     }
 
     private static Stream dataProviderComponentType() {

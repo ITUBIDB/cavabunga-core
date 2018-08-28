@@ -3,7 +3,8 @@ package tr.edu.itu.cavabunga.lib.entity.component;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.runner.RunWith;
 import tr.edu.itu.cavabunga.lib.entity.Component;
 import tr.edu.itu.cavabunga.lib.entity.Property;
 import tr.edu.itu.cavabunga.lib.entity.property.PropertyType;
@@ -15,9 +16,9 @@ import java.util.stream.Stream;
 import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-@SpringBootTest
-class AlarmTest {
 
+@RunWith(JUnitPlatform.class)
+class AlarmTest {
 	@ParameterizedTest
 	@MethodSource("dataProviderNotValid")
 	void validateFailTest(Component parent, ArrayList<PropertyType> properties) throws Validation{

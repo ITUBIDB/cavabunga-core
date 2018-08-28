@@ -26,8 +26,6 @@ import javax.persistence.*;
         @JsonSubTypes.Type(value = Dir.class, name = "Dir"),
         @JsonSubTypes.Type(value = Encoding.class, name = "Encoding"),
         @JsonSubTypes.Type(value = Fbtype.class, name = "Fbtype"),
-        @JsonSubTypes.Type(value = Fmttype.class, name = "Fmttype"),
-        @JsonSubTypes.Type(value = Language.class, name = "Language"),
         @JsonSubTypes.Type(value = Member.class, name = "Member"),
         @JsonSubTypes.Type(value = Partstat.class, name = "Partstat"),
         @JsonSubTypes.Type(value = Range.class, name = "Range"),
