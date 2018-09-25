@@ -43,16 +43,6 @@ public enum ParameterType {
             return new Fbtype();
         }
     },
-    Fmttype {
-        public Parameter create() {
-            return new Fmttype();
-        }
-    },
-    Language {
-        public Parameter create() {
-            return new Language();
-        }
-    },
     Member {
         public Parameter create() {
             return new Member();
