@@ -11,7 +11,7 @@ import java.util.List;
 @Entity
 public class Calendar extends Component {
     @Override
-    public void validate(){
+    public void validate() {
         if(this.getParent() != null) {
             throw new Validation("Calendar component cannot have parent component");
         }

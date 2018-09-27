@@ -12,7 +12,7 @@ import java.util.List;
 public class Event extends Component {
     @Override
     public void validate(){
-        if(!(this.getParent() instanceof Calendar)){
+        if(!(this.getParent() instanceof Calendar)) {
            throw new Validation("Event component parent should be a Calendar");
         }
 
