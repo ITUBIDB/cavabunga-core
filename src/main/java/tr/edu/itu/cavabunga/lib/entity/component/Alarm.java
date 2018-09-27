@@ -11,9 +11,9 @@ import java.util.List;
 @Entity
 public class Alarm extends Component {
     @Override
-    public void validate(){
-        if(!(this.getParent() instanceof Event) && !(this.getParent() instanceof Todo)){
-            throw new Validation("Alaram component parent should be a Event or Todo");
+    public void validate() {
+        if(!(this.getParent() instanceof Event) && !(this.getParent() instanceof Todo)) {
+            throw new Validation("Alarm component parent should be a Event or Todo");
         }
 
         super.validate();

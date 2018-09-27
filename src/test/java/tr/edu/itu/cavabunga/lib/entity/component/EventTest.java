@@ -11,42 +11,53 @@ import java.util.stream.Stream;
 
 
 @RunWith(JUnitPlatform.class)
-class AlarmTest extends ComponentTest {
+class EventTest extends ComponentTest {
 
 	private static Stream dataProviderNotValid() {
 		return Stream.of(
 			Arguments.of(
-				new Alarm(),
+				new Event(),
 				new Freebusy(),
 				new ArrayList<PropertyType>() {{
-					add(PropertyType.Due);
-					add(PropertyType.Repeat);
+					add(PropertyType.Location);
 				}}),
 			Arguments.of(
-				new Alarm(),
 				new Event(),
+				new Calendar(),
 				new ArrayList<PropertyType>() {{
-					add(PropertyType.Due);
-					add(PropertyType.Due);
+					add(PropertyType.Status);
+					add(PropertyType.Status);
+				}}),
+			Arguments.of(
+				new Event(),
+				new Calendar(),
+				new ArrayList<PropertyType>() {{
+					add(PropertyType.Duration);
+				}}),
+			Arguments.of(
+				new Event(),
+				new Calendar(),
+				new ArrayList<PropertyType>() {{
+					add(PropertyType.Dtend);
 				}})
 		);
 	}
 
-
 	private static Stream dataProviderValid() {
 		return Stream.of(
 			Arguments.of(
-				new Alarm(),
 				new Event(),
+				new Calendar(),
 				new ArrayList<PropertyType>() {{
-					add(PropertyType.Action);
-					add(PropertyType.Trigger);
+					add(PropertyType.Dtend);
+					add(PropertyType.Duration);
 				}}),
 			Arguments.of(
-				new Alarm(),
-				new Todo(),
+				new Event(),
+				new Calendar(),
 				new ArrayList<PropertyType>() {{
-					add(PropertyType.Action);
+					add(PropertyType.Dtend);
+					add(PropertyType.Duration);
 					add(PropertyType.Trigger);
 					add(PropertyType.Due);
 				}})
