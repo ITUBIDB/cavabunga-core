@@ -8,8 +8,6 @@ import tr.edu.itu.cavabunga.lib.entity.property.PropertyType;
 import java.util.ArrayList;
 import java.util.stream.Stream;
 
-
-
 @RunWith(JUnitPlatform.class)
 class CalendarTest extends ComponentTest {
 
@@ -51,7 +49,6 @@ class CalendarTest extends ComponentTest {
 				}})
 		);
 	}
-
 
 	private static Stream dataProviderValid() {
 		return Stream.of(

@@ -8,8 +8,6 @@ import tr.edu.itu.cavabunga.lib.entity.property.PropertyType;
 import java.util.ArrayList;
 import java.util.stream.Stream;
 
-
-
 @RunWith(JUnitPlatform.class)
 class EventTest extends ComponentTest {
 
