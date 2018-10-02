@@ -8,11 +8,11 @@ import javax.persistence.Entity;
 @Entity
 public class Dtend extends Property {
     @Override
-    public void validate(){
+    public void validate() {
         super.validate();
         try {
             super.validateValueType(PropertyValueType.DATETIME);
-        }catch (Validation e){
+        } catch (Validation e){
             super.validateValueType(PropertyValueType.DATE);
         }
     }

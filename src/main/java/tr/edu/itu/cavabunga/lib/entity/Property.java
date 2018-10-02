@@ -141,13 +141,10 @@ public abstract class Property {
 				throw new Validation(this.getClass().getName() + " value is not valid FLOAT type " + value);
 			}
 		} else if (propertyValueType == PropertyValueType.INTEGER) {
-			String[] parts = value.split(",");
-			for (String part : parts) {
-				try {
-					Integer i = Integer.parseInt(value);
-				} catch (NumberFormatException e) {
-					throw new Validation(this.getClass().getName() + " value is not valid INTEGER type" + value);
-				}
+			try {
+				Integer.parseInt(value);
+			} catch (NumberFormatException e) {
+				throw new Validation(this.getClass().getName() + " value is not valid INTEGER type" + value);
 			}
 		} else if (propertyValueType == PropertyValueType.PERIOD) {
 			//TODO: rfc5545 pg 36

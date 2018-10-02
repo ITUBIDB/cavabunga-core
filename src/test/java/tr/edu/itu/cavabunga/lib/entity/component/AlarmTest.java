@@ -4,11 +4,8 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.platform.runner.JUnitPlatform;
 import org.junit.runner.RunWith;
 import tr.edu.itu.cavabunga.lib.entity.property.PropertyType;
-
 import java.util.ArrayList;
 import java.util.stream.Stream;
-
-
 
 @RunWith(JUnitPlatform.class)
 class AlarmTest extends ComponentTest {
@@ -31,7 +28,6 @@ class AlarmTest extends ComponentTest {
 				}})
 		);
 	}
-
 
 	private static Stream dataProviderValid() {
 		return Stream.of(
