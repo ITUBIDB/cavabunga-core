@@ -12,7 +12,7 @@ public class Percent extends Property {
         super.validate();
         super.validateValueType(PropertyValueType.INTEGER);
 
-        if(Integer.parseInt(this.getValue()) > 0 | Integer.parseInt(this.getValue()) < 0){
+        if(Integer.parseInt(this.getValue()) < 0 || Integer.parseInt(this.getValue()) > 100){
             throw new Validation("PERCENT property must be in range of 0 to 100: " + this.getValue());
         }
     }
